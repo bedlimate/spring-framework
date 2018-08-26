@@ -31,6 +31,9 @@ package org.springframework.beans.factory;
  * and {@link org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory}
  * for examples of processing {@code *Aware} interface callbacks.
  *
+ * 如果某个类想使用某些资源，例如ApplicationContext,BeanDefinitionRestry,ResourceLoader等等，
+ * 可以通过实现相应的接口，在程序运行期间，会通过set方法完成相应资源的注入
+ *
  * @author Chris Beams
  * @since 3.1
  */

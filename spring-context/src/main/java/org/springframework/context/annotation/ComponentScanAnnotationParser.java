@@ -77,6 +77,8 @@ class ComponentScanAnnotationParser {
 		ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(this.registry,
 				componentScan.getBoolean("useDefaultFilters"), this.environment, this.resourceLoader);
 
+		//以下4行代码就是spring对自定义BeanNameGenerator的扩展，从代码我们知道，要想替换很简单，
+		// 只需要在@ComponentScan注解中指定一个nameGenerator即可。
 		Class<? extends BeanNameGenerator> generatorClass = componentScan.getClass("nameGenerator");
 		boolean useInheritedGenerator = (BeanNameGenerator.class == generatorClass);
 		scanner.setBeanNameGenerator(useInheritedGenerator ? this.beanNameGenerator :
@@ -119,6 +121,9 @@ class ComponentScanAnnotationParser {
 		for (Class<?> clazz : componentScan.getClassArray("basePackageClasses")) {
 			basePackages.add(ClassUtils.getPackageName(clazz));
 		}
+
+		//在springboot应用中，如果我们没有制定当前应用的basePackages，将会默认使用启动类所在包路径作为basePackage，
+		// 所以，应注意这一点。避免我们编写的类文件在basePackages之外，导致注入失败
 		if (basePackages.isEmpty()) {
 			basePackages.add(ClassUtils.getPackageName(declaringClass));
 		}
@@ -129,6 +134,7 @@ class ComponentScanAnnotationParser {
 				return declaringClass.equals(className);
 			}
 		});
+		//前面都是对当前扫描器做一个准备工作（指定扫描路径，指定文件类型）,接下来的动作才是真正完成对BeanDefinition的读取工作
 		return scanner.doScan(StringUtils.toStringArray(basePackages));
 	}
 

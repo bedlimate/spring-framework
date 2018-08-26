@@ -67,6 +67,10 @@ package org.springframework.core.env;
  * @see org.springframework.context.ConfigurableApplicationContext#getEnvironment
  * @see org.springframework.context.ConfigurableApplicationContext#setEnvironment
  * @see org.springframework.context.support.AbstractApplicationContext#createEnvironment
+ *
+ * 这个接口可以提供当前容器运行的环境信息，可以简单的理解为配置信息，例如我们写的一些配置文件,
+ * 以及可以从当前操作系统获取的一些环境信息(例如 通过{@link System#getProperties()}),
+ * 如果某个类可以访问当前容器的Enviroment，那么后续可以执行通过配置文件，动态绑定参数。
  */
 public interface Environment extends PropertyResolver {
 

@@ -38,6 +38,7 @@ import org.springframework.util.ResourceUtils;
  * @see org.springframework.core.io.support.ResourcePatternResolver
  * @see org.springframework.context.ApplicationContext
  * @see org.springframework.context.ResourceLoaderAware
+ * 这个接口是spring读取外部资源的一个接口
  */
 public interface ResourceLoader {
 

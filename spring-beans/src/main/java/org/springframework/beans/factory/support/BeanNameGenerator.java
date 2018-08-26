@@ -23,6 +23,9 @@ import org.springframework.beans.factory.config.BeanDefinition;
  *
  * @author Juergen Hoeller
  * @since 2.0.3
+ * 这个接口作用就是为当前容器中的BeanDefinition生成一个beanName，
+ * 后续在容器中储存该BeanDefinition的时候，会使用刚才生成的beanName作为key,
+ * 如果出现冲突，那么将会抛出异常
  */
 public interface BeanNameGenerator {
 
