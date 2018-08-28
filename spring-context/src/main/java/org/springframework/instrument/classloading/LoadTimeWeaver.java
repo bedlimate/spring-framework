@@ -25,6 +25,10 @@ import java.lang.instrument.ClassFileTransformer;
  * <p>Implementations may operate on the current context {@code ClassLoader}
  * or expose their own instrumentable {@code ClassLoader}.
  *
+ * spring 基于Aspect完成对java代码在类加载时候将自定义的逻辑织入目标代码的一个接口
+ * 详情请参考：
+ * 	http://sexycoding.iteye.com/blog/1062372
+ *
  * @author Rod Johnson
  * @author Costin Leau
  * @since 2.0

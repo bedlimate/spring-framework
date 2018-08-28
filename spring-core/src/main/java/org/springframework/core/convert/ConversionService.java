@@ -25,6 +25,8 @@ import org.springframework.lang.Nullable;
  * @author Keith Donald
  * @author Phillip Webb
  * @since 3.0
+ *
+ * 做类型转换用的
  */
 public interface ConversionService {
 

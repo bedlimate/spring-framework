@@ -531,12 +531,19 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				postProcessBeanFactory(beanFactory);
 
 				// Invoke factory processors registered as beans in the context.
+				//此处完成所以的BeanFactoryPostProcessor的实例化以及调用；
+				// 在所以的Processor中，首先调用默认的ApplicationContext processor,
+				// 接着，调用是BeanDefinitionRegistryProcessor的processor向容器中注册BeanDefinition，
+				// 然后再调用其他的Processor
+				//总结来说，这个方法两大作用，完成BeanDefinition向容器注册和对修改容器中的beanDefinition的属性
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
+				//往容器中注册一系列BeanPostProcessor
 				registerBeanPostProcessors(beanFactory);
 
 				// Initialize message source for this context.
+				//初始化消息源（听说可以做一些国际化，但是具体没用过）
 				initMessageSource();
 
 				// Initialize event multicaster for this context.
@@ -856,6 +863,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		// Register a default embedded value resolver if no bean post-processor
 		// (such as a PropertyPlaceholderConfigurer bean) registered any before:
 		// at this point, primarily for resolution in annotation attribute values.
+		// 此处可以完成，如果注解的属性是一个spring表达式，此处可以完成值替换
 		if (!beanFactory.hasEmbeddedValueResolver()) {
 			beanFactory.addEmbeddedValueResolver(strVal -> getEnvironment().resolvePlaceholders(strVal));
 		}
@@ -872,7 +880,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		// Allow for caching all bean definition metadata, not expecting further changes.
 		beanFactory.freezeConfiguration();
 
+		//TODO 以上两句不太清楚具体的作用
+
 		// Instantiate all remaining (non-lazy-init) singletons.
+		//这一步就是完成所有非延迟加载的单例Bean的实例化工作
+		// （BeanFactoryPostProcessor和BeanPostProcessor这些Bean在前面阶段已经完成了实例化）
 		beanFactory.preInstantiateSingletons();
 	}
 

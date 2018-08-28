@@ -17,6 +17,7 @@
 package org.springframework.beans.factory.config;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.lang.Nullable;
 
 /**
@@ -39,6 +40,11 @@ import org.springframework.lang.Nullable;
  * @see DestructionAwareBeanPostProcessor
  * @see ConfigurableBeanFactory#addBeanPostProcessor
  * @see BeanFactoryPostProcessor
+ *
+ * 这个接口的作用主要作用就是允许用户在Bean实例化并且完成依赖注入之后，添加我们自己的逻辑。
+ * 以{@link InitializingBean#afterPropertiesSet()} 或者自定义的init-method为分界线，
+ * 在分界线之前，调用{{@link #postProcessBeforeInitialization(Object, String)}};
+ * 在分界线之后，调用{@link #postProcessAfterInitialization(Object, String)}
  */
 public interface BeanPostProcessor {
 
