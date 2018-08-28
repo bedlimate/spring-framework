@@ -29,6 +29,8 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
  * @author Juergen Hoeller
  * @since 3.0.1
  * @see org.springframework.context.annotation.ConfigurationClassPostProcessor
+ *
+ * 这个接口的主要作用就是网容器中添加一些自定义的BeanDefinition
  */
 public interface BeanDefinitionRegistryPostProcessor extends BeanFactoryPostProcessor {
 
@@ -39,6 +41,11 @@ public interface BeanDefinitionRegistryPostProcessor extends BeanFactoryPostProc
 	 * bean definitions before the next post-processing phase kicks in.
 	 * @param registry the bean definition registry used by the application context
 	 * @throws org.springframework.beans.BeansException in case of errors
+	 *
+	 * 这个方法可以修改容器中已经存在的BeanDefinition，也可以向容器中注册自定义的BeanDefinition.
+	 * 典型应用如解析被@Configuration标记的类中提供的Bean.
+	 * 当该方法在容器中首次调用的时候，容器中仅仅只有内部Bean的BeanDefinition。
+	 * 而我们自己定义的例如被@Componenet，@Service,@Controller标记的bean会在这个方法调用之后被注册到容器中
 	 */
 	void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException;
 

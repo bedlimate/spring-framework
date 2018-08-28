@@ -49,6 +49,9 @@ import org.springframework.util.Assert;
  * @see AnnotatedBeanDefinitionReader
  * @see ClassPathBeanDefinitionScanner
  * @see org.springframework.context.support.GenericXmlApplicationContext
+ *
+ * springboot应用大部分情况下都是使用该实现类作为ApplicationContext
+ * 默认情况也是使用{@link DefaultListableBeanFactory}作为容器
  */
 public class AnnotationConfigApplicationContext extends GenericApplicationContext implements AnnotationConfigRegistry {
 

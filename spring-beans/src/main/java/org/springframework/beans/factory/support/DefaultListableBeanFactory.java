@@ -87,7 +87,7 @@ import org.springframework.util.StringUtils;
  *
  * <p>Typical usage is registering all bean definitions first (possibly read
  * from a bean definition file), before accessing beans. Bean lookup by name
- * is therefore an inexpensive operation in a local bean definition table,
+ * is therefore an inexpensive oation in a local bean definition table,
  * operating on pre-resolved bean definition metadata objects.
  *
  * <p>Note that readers for specific bean definition formats are typically

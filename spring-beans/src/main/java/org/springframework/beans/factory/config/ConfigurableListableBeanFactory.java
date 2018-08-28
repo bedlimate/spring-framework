@@ -59,6 +59,9 @@ public interface ConfigurableListableBeanFactory
 	 * @param ifc the dependency interface to ignore
 	 * @see org.springframework.beans.factory.BeanFactoryAware
 	 * @see org.springframework.context.ApplicationContextAware
+	 *
+	 * 暂时没有理解该方法的真正作用，网上找了一篇博客：
+	 * http://www.frankhu.org/2018/01/13/ignoreDependencyInterface/
 	 */
 	void ignoreDependencyInterface(Class<?> ifc);
 

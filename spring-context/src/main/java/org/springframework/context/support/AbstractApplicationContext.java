@@ -514,12 +514,16 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
+			//这一步主要工作就是完成配置文件读取
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
+			// 对于 AnnotationConfigApplicationContext这个子类来说，
+			// 此处仅仅就是修改一个标志位以及返回一个空的DefaultListableBeanFactory
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
+			// 刚才的BeanFactory还不能工作，该方法就是完成BeanFactory的参数配置工作
 			prepareBeanFactory(beanFactory);
 
 			try {
@@ -655,6 +659,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		// Register early post-processor for detecting inner beans as ApplicationListeners.
 		beanFactory.addBeanPostProcessor(new ApplicationListenerDetector(this));
 
+		//感觉像是与加载类时织入相关的，具体没使用过
 		// Detect a LoadTimeWeaver and prepare for weaving, if found.
 		if (beanFactory.containsBean(LOAD_TIME_WEAVER_BEAN_NAME)) {
 			beanFactory.addBeanPostProcessor(new LoadTimeWeaverAwareProcessor(beanFactory));
@@ -662,6 +667,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			beanFactory.setTempClassLoader(new ContextTypeMatchClassLoader(beanFactory.getBeanClassLoader()));
 		}
 
+		//接下来的处理都是与环境相关
 		// Register default environment beans.
 		if (!beanFactory.containsLocalBean(ENVIRONMENT_BEAN_NAME)) {
 			beanFactory.registerSingleton(ENVIRONMENT_BEAN_NAME, getEnvironment());
@@ -680,8 +686,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * will have been instantiated yet. This allows for registering special
 	 * BeanPostProcessors etc in certain ApplicationContext implementations.
 	 * @param beanFactory the bean factory used by the application context
+	 *                    当程序运行到这个方法的时候，我们常规的BeanDefinition都已经全部被加载到容器中了，
+	 *                    但是还没有一个Bean进行实例化，此处允许我们对BeanFactory做进一步处理.例如：
+	 *                    	修改其中某些BeanDefinition。
+	 *
 	 */
 	protected void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+
 	}
 
 	/**

@@ -51,13 +51,18 @@ final class PostProcessorRegistrationDelegate {
 	private PostProcessorRegistrationDelegate() {
 	}
 
-
+	//整个方法我们从名称就知道，就是调用BeanFactoryPostProcessor，但是我们知道，着一些列责任链是具有优先级别的
 	public static void invokeBeanFactoryPostProcessors(
 			ConfigurableListableBeanFactory beanFactory, List<BeanFactoryPostProcessor> beanFactoryPostProcessors) {
 
 		// Invoke BeanDefinitionRegistryPostProcessors first, if any.
-		Set<String> processedBeans = new HashSet<>();
+		// 第一步，我们先处理 BeanDefinitionRegistry类型的Processor；
+		// 注意，这个Processor是我们在ApplicationContext中添加的(
+		// 也就是说，对于某一个具体的Application而言，它有哪些Processor是相聚固定的，不好修改。)
 
+		Set<String> processedBeans = new HashSet<>();
+		//这里把processor分为两大类，一类就是BeanDefinitionRegistry（往容器中注册BeanDefinition的），
+		// 另一类就普通的BeanFactoryProcessor(一般是修改容器中的BeanDefinition的属性的)
 		if (beanFactory instanceof BeanDefinitionRegistry) {
 			BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
 			List<BeanFactoryPostProcessor> regularPostProcessors = new ArrayList<>();
@@ -79,6 +84,15 @@ final class PostProcessorRegistrationDelegate {
 			// uninitialized to let the bean factory post-processors apply to them!
 			// Separate between BeanDefinitionRegistryPostProcessors that implement
 			// PriorityOrdered, Ordered, and the rest.
+
+			// 接下来几步需要做的是，获取beanDefinitionMap中的BeanDifinition，
+			// 如果其对应的Bean是BeanDefinitionRegistryPostProcessor，对其实例化，并且完成实例化。
+			// 实例化之后，先执行PriorityOrdered类型的Processor，然后执行是Ordered并且不是PriorityOrdered的processor,
+			// 最后，执行其他的BeanDefinitionRegistryPostProcessor
+			// 其实，这个地方就是留给我们扩展的，如果我们希望往容器中添加自定义的BeanDefinition，
+			// 那么实现BeanDefinitionRegistryProcessor即可，如果需要将其执行的顺序往前排，
+			// 那么同时实现PriorityOrdered或者Ordered即可
+
 			List<BeanDefinitionRegistryPostProcessor> currentRegistryProcessors = new ArrayList<>();
 
 			// First, invoke the BeanDefinitionRegistryPostProcessors that implement PriorityOrdered.
@@ -109,6 +123,7 @@ final class PostProcessorRegistrationDelegate {
 			currentRegistryProcessors.clear();
 
 			// Finally, invoke all other BeanDefinitionRegistryPostProcessors until no further ones appear.
+			//此处考虑到每次注册到容器中的BeanDefinition对应的Bean可能也是一个BeanDefinitionRegistry，所以需要循环处理
 			boolean reiterate = true;
 			while (reiterate) {
 				reiterate = false;
