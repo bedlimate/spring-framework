@@ -30,6 +30,8 @@ import org.springframework.lang.Nullable;
  * and returns "null" from {@code #toString()}, which is how they can be tested
  * externally (since this class itself is not public).
  *
+ * 可以理解如果一个实例为null，那么这个实例的class就是{@link NullBean#getClass()},实际上代表无效
+ *
  * @author Juergen Hoeller
  * @since 5.0
  */

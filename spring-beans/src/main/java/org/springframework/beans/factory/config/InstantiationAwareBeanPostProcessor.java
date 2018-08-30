@@ -67,6 +67,11 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	 * @throws org.springframework.beans.BeansException in case of errors
 	 * @see #postProcessAfterInstantiation
 	 * @see org.springframework.beans.factory.support.AbstractBeanDefinition#hasBeanClass
+	 *
+	 * 这个方法是最先被执行的，可以在目标对象实例化之前被调用。所以我们使用其他类型对象来替换原来的对象。
+	 * 但是为了后续的类型转换成功，我们只能返回一个目标类型或者目标类型的子类型。
+	 * 此处，就是Spring Aop实现的切入点。考虑通过JDK动态代理或者Cglib代理返回目标类型的子类来替换目标类。
+	 * 不过需要注意就是，目标类仅仅只会被代理一次。
 	 */
 	@Nullable
 	default Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
