@@ -1345,7 +1345,12 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		// Give any InstantiationAwareBeanPostProcessors the opportunity to modify the
 		// state of the bean before properties are set. This can be used, for example,
 		// to support styles of field injection.
+		// 这个变量标记对于当前bean是否要进行依赖注入
 		boolean continueWithPropertyPopulation = true;
+
+		// 这一段代码表示： 对于当前bean，如果存在一个InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation()
+		// 方法的返回值为false.那么就停止后续的InstantiationAwareBeanPostProcessor对当前bean的处理。
+		// 并且对于当前bean, 不需要再进行依赖注入。
 
 		if (!mbd.isSynthetic() && hasInstantiationAwareBeanPostProcessors()) {
 			for (BeanPostProcessor bp : getBeanPostProcessors()) {

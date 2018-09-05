@@ -51,7 +51,7 @@ final class PostProcessorRegistrationDelegate {
 	private PostProcessorRegistrationDelegate() {
 	}
 
-	//整个方法我们从名称就知道，就是调用BeanFactoryPostProcessor，但是我们知道，着一些列责任链是具有优先级别的
+	//整个方法我们从名称就知道，就是调用BeanFactoryPostProcessor，但是我们知道，这一些系列责任链是具有优先级别的
 	public static void invokeBeanFactoryPostProcessors(
 			ConfigurableListableBeanFactory beanFactory, List<BeanFactoryPostProcessor> beanFactoryPostProcessors) {
 

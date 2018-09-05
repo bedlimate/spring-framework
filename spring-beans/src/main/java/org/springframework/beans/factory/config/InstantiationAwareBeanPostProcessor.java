@@ -92,6 +92,9 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	 * instances being invoked on this bean instance.
 	 * @throws org.springframework.beans.BeansException in case of errors
 	 * @see #postProcessBeforeInstantiation
+	 *
+	 *该方法的调用时机是在Bean实例化之后，Bean属性填充之前。
+	 * 例如，如果beanName满足一定条件的时候, 可以阻止这个Bean的依赖注入。
 	 */
 	default boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
 		return true;

@@ -275,6 +275,8 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 			}
 		}
 
+		//先找被@Configuration注解标记的class，如果一个都没找到，那么，退出该方法。
+		//实际上，在SpringBoot应用中，至少会找到一个。那就是被SpringBootApplication注解标记的class
 		// Return immediately if no @Configuration classes were found
 		if (configCandidates.isEmpty()) {
 			return;
@@ -311,6 +313,8 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 
 		Set<BeanDefinitionHolder> candidates = new LinkedHashSet<>(configCandidates);
 		Set<ConfigurationClass> alreadyParsed = new HashSet<>(configCandidates.size());
+		// 接下来这一段代码就是完成BeanDefinition的解析和注册。以@Configuration注解为入口，
+		// 然后处理@ComponentScan注解，接着就是@Import、@ImportResource注解，再处理@Bean的注解。
 		do {
 			parser.parse(candidates);
 			parser.validate();
