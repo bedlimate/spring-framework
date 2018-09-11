@@ -27,6 +27,8 @@ import org.springframework.util.Assert;
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @see AdvisedSupport
+ *
+ * 这是一个纯数据类，为类似于ProxyFactoryBean这样的类提供配置
  */
 public class ProxyConfig implements Serializable {
 
@@ -56,6 +58,9 @@ public class ProxyConfig implements Serializable {
 	 * the proxy-target-class behavior will also be applied if no interfaces
 	 * have been specified (and no interface autodetection is activated).
 	 * @see org.springframework.aop.TargetSource#getTargetClass()
+	 *
+	 *这个属性决定是否代理目标类，而不仅仅只是代理指定接口。默认值为false.
+	 * 如果被代理对象class是一个接口，将会使用JDK动态代理，如果是一个类，将会是CGLIB动态代理
 	 */
 	public void setProxyTargetClass(boolean proxyTargetClass) {
 		this.proxyTargetClass = proxyTargetClass;

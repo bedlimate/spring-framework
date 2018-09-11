@@ -42,6 +42,8 @@ import org.springframework.lang.Nullable;
  * @see PlatformTransactionManager#getTransaction(TransactionDefinition)
  * @see org.springframework.transaction.support.DefaultTransactionDefinition
  * @see org.springframework.transaction.interceptor.TransactionAttribute
+ *
+ * 定义事务属性的一个接口，例如事务的隔离级别、传播属性、超时时间、是否只读。
  */
 public interface TransactionDefinition {
 
@@ -50,6 +52,7 @@ public interface TransactionDefinition {
 	 * Analogous to the EJB transaction attribute of the same name.
 	 * <p>This is typically the default setting of a transaction definition,
 	 * and typically defines a transaction synchronization scope.
+	 * 默认的事务传播行为。如果当前有事务，则加入当前事务，否则创建一个新的事务。
 	 */
 	int PROPAGATION_REQUIRED = 0;
 
