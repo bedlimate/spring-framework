@@ -28,6 +28,8 @@ import org.springframework.lang.Nullable;
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @see DefaultAopProxyFactory
+ *
+ * Spring Aop 创建代理对象的核心接口, 常见实现有Jdk动态代理与Cglib动态代理
  */
 public interface AopProxy {
 
@@ -49,6 +51,8 @@ public interface AopProxy {
 	 * @param classLoader the class loader to create the proxy with
 	 * (or {@code null} for the low-level proxy facility's default)
 	 * @return the new proxy object (never {@code null})
+	 *
+	 * 通过指定的CLassLoader创建代理对象
 	 */
 	Object getProxy(@Nullable ClassLoader classLoader);
 

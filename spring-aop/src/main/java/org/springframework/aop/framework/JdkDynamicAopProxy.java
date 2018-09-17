@@ -60,6 +60,8 @@ import org.springframework.util.ClassUtils;
  * @see java.lang.reflect.Proxy
  * @see AdvisedSupport
  * @see ProxyFactory
+ *
+ * 1. 这个类基于Jdk动态代理创建代理对象
  */
 final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializable {
 
@@ -84,11 +86,15 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 
 	/**
 	 * Is the {@link #equals} method defined on the proxied interfaces?
+	 *
+	 * 被代理接口中是否定义了{@link #equals(Object)}方法
 	 */
 	private boolean equalsDefined;
 
 	/**
 	 * Is the {@link #hashCode} method defined on the proxied interfaces?
+	 *
+	 * 被代理接口中是否定义了{@link #hashCode()}方法
 	 */
 	private boolean hashCodeDefined;
 
@@ -113,6 +119,7 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 		return getProxy(ClassUtils.getDefaultClassLoader());
 	}
 
+	// 分为三个步骤, 第一次
 	@Override
 	public Object getProxy(@Nullable ClassLoader classLoader) {
 		if (logger.isTraceEnabled()) {

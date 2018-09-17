@@ -86,6 +86,10 @@ public interface BeanPostProcessor {
 	 * @throws org.springframework.beans.BeansException in case of errors
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet
 	 * @see org.springframework.beans.factory.FactoryBean
+	 *
+	 * 该方法典型应用:
+	 * 	1. 类似于InitializingBean#afterPropertiesSet()
+	 * 	2. 类似于AbstractAutoProxyCreator完成对bean的代理
 	 */
 	@Nullable
 	default Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
