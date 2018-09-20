@@ -22,6 +22,11 @@ package org.aopalliance.aop;
  *
  * @author Rod Johnson
  * @version $Id: Advice.java,v 1.1 2004/03/19 17:02:16 johnsonr Exp $
+ *
+ * Advice就是在Aop中定义的增强的内容,简单说就是我们想在连接点想做啥,都可以通过实现Advice实现.
+ * 根据我们不同的需求,我们有不同的Advice的实现.
+ * 常见的例如,我们想在连接点之前做一点东西, 有{@link org.springframework.aop.BeforeAdvice}
+ * 想阻止目标方法的调用, 有 {@link org.springframework.aop.aspectj.AspectJAroundAdvice}
  */
 public interface Advice {
 

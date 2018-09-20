@@ -62,6 +62,8 @@ import org.springframework.util.ClassUtils;
  * @see ProxyFactory
  *
  * 1. 这个类基于Jdk动态代理创建代理对象
+ * 2. 这个类包装了我们定义的Advisor并将自己作为一个InvocationHandler,
+ * 使得我们调用目标方法的时候, 执行{@link InvocationHandler#invoke(Object, Method, Object[])}方法
  */
 final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializable {
 
@@ -119,14 +121,17 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 		return getProxy(ClassUtils.getDefaultClassLoader());
 	}
 
-	// 分为三个步骤, 第一次
+	// 分为三个步骤
 	@Override
 	public Object getProxy(@Nullable ClassLoader classLoader) {
 		if (logger.isTraceEnabled()) {
 			logger.trace("Creating JDK dynamic proxy: " + this.advised.getTargetSource());
 		}
+		// 第一步: 计算被代理的接口
 		Class<?>[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(this.advised, true);
+		//接着需要确定 Object#equals和Object#hashcode 方法是否在接口有定义(这两个方法是不需要增强的)
 		findDefinedEqualsAndHashCodeMethods(proxiedInterfaces);
+		//创建被代理对象
 		return Proxy.newProxyInstance(classLoader, proxiedInterfaces, this);
 	}
 
@@ -157,6 +162,8 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 	 * Implementation of {@code InvocationHandler.invoke}.
 	 * <p>Callers will see exactly the exception thrown by the target,
 	 * unless a hook method throws an exception.
+	 *
+	 * 当我们调用代理对象的方法的时候, 实际就开始执行这个方法
 	 */
 	@Override
 	@Nullable

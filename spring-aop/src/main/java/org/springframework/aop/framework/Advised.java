@@ -34,6 +34,8 @@ import org.springframework.aop.TargetSource;
  * @author Juergen Hoeller
  * @since 13.03.2003
  * @see org.springframework.aop.framework.AdvisedSupport
+ *
+ * Advised 可以理解为创建代理对象的工厂的配置,包含一些Advice(我们定义的增强的内容), 被代理的接口,被代理的对象.
  */
 public interface Advised extends TargetClassAware {
 
@@ -111,6 +113,8 @@ public interface Advised extends TargetClassAware {
 	/**
 	 * Return the advisors applying to this proxy.
 	 * @return a list of Advisors applying to this proxy (never {@code null})
+	 *
+	 * 返回Pointcut和Advice的组合
 	 */
 	Advisor[] getAdvisors();
 

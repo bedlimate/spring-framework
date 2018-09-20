@@ -743,6 +743,9 @@ class CglibAopProxy implements AopProxy, Serializable {
 		@Override
 		protected Object invokeJoinpoint() throws Throwable {
 			if (this.publicMethod && getMethod().getDeclaringClass() != Object.class) {
+				//此处就是进行Cglib代理调用目标方法的实现.
+				// 此处MethodProxy.invoke(Object obj, Object[] args)方法传入的对象是被代理对象,
+				// 所以即使目标方法出现同一个类中嵌套调用也只会是最外层方法调用被代理一次.
 				return this.methodProxy.invoke(this.target, this.arguments);
 			}
 			else {

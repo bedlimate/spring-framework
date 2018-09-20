@@ -105,6 +105,10 @@ public class ProxyFactory extends ProxyCreatorSupport {
 	 * @param classLoader the class loader to create the proxy with
 	 * (or {@code null} for the low-level proxy facility's default)
 	 * @return the proxy object
+	 *
+	 * 这个地方有点绕,
+	 * 第一步: 创建代理对象的工厂的工厂, 然后根据配置信息,选择使用Jdk动态代理还是Cglib动态代理
+	 * 第二部, 创建代理对象
 	 */
 	public Object getProxy(@Nullable ClassLoader classLoader) {
 		return createAopProxy().getProxy(classLoader);

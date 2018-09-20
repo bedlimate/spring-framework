@@ -40,6 +40,8 @@ package org.springframework.aop.framework;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
+ *
+ * 创建代理对象的工厂
  */
 public interface AopProxyFactory {
 
@@ -49,6 +51,8 @@ public interface AopProxyFactory {
 	 * AdvisedSupport object
 	 * @return the corresponding AOP proxy
 	 * @throws AopConfigException if the configuration is invalid
+	 *
+	 * 基于配置创建代理对象
 	 */
 	AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException;
 

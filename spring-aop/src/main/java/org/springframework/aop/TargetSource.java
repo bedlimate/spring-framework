@@ -32,6 +32,8 @@ import org.springframework.lang.Nullable;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
+ *
+ * 这个接口代表的是被代理对象的一些数据
  */
 public interface TargetSource extends TargetClassAware {
 
@@ -40,6 +42,8 @@ public interface TargetSource extends TargetClassAware {
 	 * <p>Can return {@code null}, although certain usages of a {@code TargetSource}
 	 * might just work with a predetermined target class.
 	 * @return the type of targets returned by this {@link TargetSource}
+	 *
+	 * 获取被代理对象的类实例
 	 */
 	@Override
 	@Nullable
@@ -60,6 +64,8 @@ public interface TargetSource extends TargetClassAware {
 	 * @return the target object which contains the joinpoint,
 	 * or {@code null} if there is no actual target instance
 	 * @throws Exception if the target object can't be resolved
+	 *
+	 * 返回被代理的对象
 	 */
 	@Nullable
 	Object getTarget() throws Exception;

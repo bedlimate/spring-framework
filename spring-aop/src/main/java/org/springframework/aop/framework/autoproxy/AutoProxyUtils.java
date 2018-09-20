@@ -106,6 +106,9 @@ public abstract class AutoProxyUtils {
 			Class<?> targetClass) {
 
 		if (beanName != null && beanFactory.containsBeanDefinition(beanName)) {
+			//在beanFactory中找到对于的BeanDefinition,然后增加一对key-value
+			//key: org.springframework.aop.framework.autoproxy.AutoProxyUtils.originalTargetClass
+			//value: ${targetClass}
 			beanFactory.getMergedBeanDefinition(beanName).setAttribute(ORIGINAL_TARGET_CLASS_ATTRIBUTE, targetClass);
 		}
 	}

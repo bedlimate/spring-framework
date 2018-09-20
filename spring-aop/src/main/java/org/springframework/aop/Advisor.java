@@ -32,6 +32,9 @@ import org.aopalliance.aop.Advice;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
+ *
+ * Advisor 是定义在哪个连接点(Pointcut),配置哪些增强内容(Advice),
+ * 可以简单理解就是组合了Advice和Pointcut
  */
 public interface Advisor {
 
