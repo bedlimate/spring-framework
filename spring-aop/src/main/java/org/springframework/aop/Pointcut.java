@@ -29,6 +29,7 @@ package org.springframework.aop;
  * @see org.springframework.aop.support.Pointcuts
  * @see org.springframework.aop.support.ClassFilters
  * @see org.springframework.aop.support.MethodMatchers
+ *
  */
 public interface Pointcut {
 

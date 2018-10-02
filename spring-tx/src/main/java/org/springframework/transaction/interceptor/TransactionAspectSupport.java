@@ -67,6 +67,8 @@ import org.springframework.util.StringUtils;
  * @see #setTransactionManager
  * @see #setTransactionAttributes
  * @see #setTransactionAttributeSource
+ *
+ * 这个类提供对事务流程抽象的实现
  */
 public abstract class TransactionAspectSupport implements BeanFactoryAware, InitializingBean {
 
@@ -273,6 +275,8 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	 * @param invocation the callback to use for proceeding with the target invocation
 	 * @return the return value of the method, if any
 	 * @throws Throwable propagated from the target invocation
+	 *
+	 * 事务增强的核心方法
 	 */
 	@Nullable
 	protected Object invokeWithinTransaction(Method method, @Nullable Class<?> targetClass,
@@ -280,8 +284,11 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 
 		// If the transaction attribute is null, the method is non-transactional.
 		TransactionAttributeSource tas = getTransactionAttributeSource();
+		//第一步, 获取事务配置(例如, 事务传播等级, 事务隔离级别), 可以简单理解为@Transactional注解的属性
 		final TransactionAttribute txAttr = (tas != null ? tas.getTransactionAttribute(method, targetClass) : null);
+		//第二步, 获取事务管理器,我们平常基于数据库的就是DataSourceTransactionManager
 		final PlatformTransactionManager tm = determineTransactionManager(txAttr);
+		//第三步就是计算当前事务的标识符,对于数据库事务使用的就是全限定类名称+方法名称
 		final String joinpointIdentification = methodIdentification(method, targetClass, txAttr);
 
 		if (txAttr == null || !(tm instanceof CallbackPreferringPlatformTransactionManager)) {

@@ -157,7 +157,8 @@ public class ReflectiveMethodInvocation implements ProxyMethodInvocation, Clonea
 
 	//该方法的调用过程为,
 	// 第一, 通过index和递归逐一执行对象的Advice链;
-	// 第二, 执行Advice的核心就是调用org.aopalliance.intercept#invoke(MethodInvocation invocation)
+	// 第二, 执行Advice的核心就是调用
+	// 		org.aopalliance.intercept#invoke(MethodInvocation invocation)(完全按照Aop联盟那一套);
 	// 第三, Advice链调用完成之后,最后大部分都要调用invokeJointpoint(也就是被代理的方法);
 	// 注意: 如果目标类出现方法方法内嵌调用,被代理的只是外层方法的实现关键点就是这个方法----invokeJointpoint
 	@Override
@@ -177,11 +178,13 @@ public class ReflectiveMethodInvocation implements ProxyMethodInvocation, Clonea
 					(InterceptorAndDynamicMethodMatcher) interceptorOrInterceptionAdvice;
 			Class<?> targetClass = (this.targetClass != null ? this.targetClass : this.method.getDeclaringClass());
 			if (dm.methodMatcher.matches(this.method, targetClass, this.arguments)) {
+				//匹配成功才调用
 				return dm.interceptor.invoke(this);
 			}
 			else {
 				// Dynamic matching failed.
 				// Skip this interceptor and invoke the next in the chain.
+				//递归调用
 				return proceed();
 			}
 		}
